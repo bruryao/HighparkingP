@@ -13,22 +13,34 @@ namespace HighparkingProject.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
+        private readonly DataContext _context;
         private static List<Customers> customer = new List<Customers> { new Customers { Id="9876543",Name="Adam" ,Phon="055", Mail ="",Code=122, Credit ="", Bit ="654",Kind=Status.Regular, Point =0} };
+       
+        public CustomerController(DataContext context)
+        {
+            _context=context; 
 
+        }
 
         static int counter = 1;
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<Customers> Get()
         {
-            return customer;
+            return _context.ListCustomer;
         }
 
         // GET api/<ValuesController>/5
        [HttpGet("{id}")]
-       public string Get(int id)
+       public ActionResult<Customers> Get(int id)
        {
-            return "value";
+            // return "value";
+            var cust = _context.ListCustomer.Find((x => x.Id.Equals(id))) ;
+            if(cust == null)
+            {
+                return NotFound();
+            }
+            return Ok(cust);    
         }
 
         // POST api/<ValuesController>
@@ -69,6 +81,7 @@ namespace HighparkingProject.Controllers
             customer.Remove(c);
             counter--;
             }
+            
         }
     }
 }
