@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace HighparkingProject
 {
-    public class DataContext
+    public class DataContext:Idatacontext
     {
         public  List<Invoicing> ListInvoicing { get; set; }
         public List<Customers> ListCustomer { get; set; }

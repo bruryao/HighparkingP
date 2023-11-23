@@ -12,26 +12,26 @@ namespace HighparkingProject.Controllers
     public class InvoicingController : ControllerBase
 
     {
-        private readonly DataContext dataContext;
+        private readonly Idatacontext _context;
         private static List<Invoicing> invocing = new List<Invoicing> { new Invoicing {Id="444" ,Enter= DateTime.Now, Exiting= DateTime.Now, Date= DateTime.Now, Payment=6.8,Dwell_time= DateTime.Now ,Kind=Status.premium} };
         // GET: api/<InvoicingController>
-        public InvoicingController(DataContext context)
+        public InvoicingController(Idatacontext context)
         {
-            dataContext = context;
+            _context = context;
 
         }
         static int counter = 1;
         [HttpGet]
-        public IEnumerable<Invoicing> Get()
+        public ActionResult<List<Invoicing>> Get()
         {
-            return dataContext.ListInvoicing;
+            return Ok(_context.ListInvoicing);
         }
 
         // GET api/<InvoicingController>/5
         [HttpGet("{id}")]
         public ActionResult<Customers> Get(int id)
         {
-            var invi = dataContext.ListInvoicing.Find(x => x.Id.Equals(id));
+            var invi = _context.ListInvoicing.Find(x => x.Id.Equals(id));
             if (invi == null){
                 return NotFound();
                 

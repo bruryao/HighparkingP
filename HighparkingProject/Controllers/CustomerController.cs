@@ -13,10 +13,10 @@ namespace HighparkingProject.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly Idatacontext _context;
         private static List<Customers> customer = new List<Customers> { new Customers { Id="9876543",Name="Adam" ,Phon="055", Mail ="",Code=122, Credit ="", Bit ="654",Kind=Status.Regular, Point =0} };
        
-        public CustomerController(DataContext context)
+        public CustomerController(Idatacontext context)
         {
             _context=context; 
 
