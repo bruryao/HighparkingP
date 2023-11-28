@@ -1,9 +1,12 @@
-﻿using HighparkingProject.Entities;
+﻿using Soild.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Xml.Linq;
+using Soild.data;
+using Soild.srvice;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,29 +17,30 @@ namespace HighparkingProject.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly Idatacontext _context;
-        private static List<Customers> customer = new List<Customers> { new Customers { Id="9876543",Name="Adam" ,Phon="055", Mail ="",Code=122, Credit ="", Bit ="654",Kind=Status.Regular, Point =0} };
-       
-        public CustomerController(Idatacontext context)
+        private readonly UserService userService;
+        private static List<Customers> customer = new List<Customers> { new Customers { Id = 987654, Name = "Adam", Phon = "055", Mail = "", Code = 122, Credit = "", Bit = "654", Kind = Status.Regular, Point = 0 } };
+        static int counter = 1;
+        public CustomerController(UserService user)
         {
-            _context=context; 
+            userService = user;
 
         }
 
-        static int counter = 1;
+
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<Customers> Get()
-        {
-            return _context.ListCustomer;
-        }
+        public ActionResult<List<Customers>> Get()
+         {
+            return userService.GetCustomers();//unittest need ok without list
+         }
 
         // GET api/<ValuesController>/5
        [HttpGet("{id}")]
        public ActionResult<Customers> Get(int id)
        {
             // return "value";
-            var cust = _context.ListCustomer.Find((x => x.Id.Equals(id))) ;
-            if(cust == null)
+            var cust = _context.ListCustomer.Find(x => x.Id==(id));
+            if (cust == null)
             {
                 return NotFound();
             }
@@ -76,7 +80,7 @@ namespace HighparkingProject.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            Customers c = customer.Find(eve => eve.Id.Equals(id));
+            Customers c = customer.Find(eve => eve.Id==(id));
             if(c != null) {
             customer.Remove(c);
             counter--;
@@ -84,4 +88,6 @@ namespace HighparkingProject.Controllers
             
         }
     }
+
+    
 }

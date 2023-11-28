@@ -1,4 +1,9 @@
 using HighparkingProject;
+using Soild.core.Repositories;
+using Soild.data;
+using Soild.data.Repositories;
+using Soild.srvice;
+using Soild.core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +13,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<Idatacontext, DataContext>();
+builder.Services.AddScoped<IUserepository, Userepository>();
+
+builder.Services.AddScoped<IUserepository, UserService>();
+builder.Services.AddSingleton<DataContext>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,3 +35,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

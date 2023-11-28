@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Soild.core\Soild.core.csproj" />
+    <ProjectReference Include="..\Soild.data\Soild.data.csproj" />
+    <ProjectReference Include="..\Soild.srvice\Soild.srvice.csproj" />
+  </ItemGroup>
+
 </Project>
