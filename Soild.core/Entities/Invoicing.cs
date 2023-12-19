@@ -3,7 +3,7 @@
     public class Invoicing
     {
         public int Reception_number { get; set; }
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public DateTime Enter { get; set; }//זמן כניסה
         public DateTime Exiting { get; set; }//זמן יציאה

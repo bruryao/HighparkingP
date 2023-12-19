@@ -2,7 +2,7 @@
 {
     public class Customers
     {
-        public int Id { get; set; } //change to string
+        public string Id { get; set; } //change to string
         public string Name { get; set; }
         public string Phon { get; set; }
         public string? Mail { get; set; }

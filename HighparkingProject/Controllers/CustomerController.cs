@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Xml.Linq;
 using Soild.data;
 using Soild.srvice;
+using Soild.core.Service;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,11 +17,11 @@ namespace HighparkingProject.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly Idatacontext _context;
-        private readonly UserService userService;
-        private static List<Customers> customer = new List<Customers> { new Customers { Id = 987654, Name = "Adam", Phon = "055", Mail = "", Code = 122, Credit = "", Bit = "654", Kind = Status.Regular, Point = 0 } };
+       // private readonly Idatacontext _context;
+        private readonly ICustumerservice userService;
+        private static List<Customers> customer = new List<Customers> { new Customers { Id = "987654", Name = "Adam", Phon = "055", Mail = "", Code = 122, Credit = "", Bit = "654", Kind = Status.Regular, Point = 0 } };
         static int counter = 1;
-        public CustomerController(UserService user)
+        public CustomerController(ICustumerservice user)
         {
             userService = user;
 
@@ -29,17 +30,18 @@ namespace HighparkingProject.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public ActionResult<List<Customers>> Get()
-         {
-            return userService.GetCustomers();//unittest need ok without list
-         }
+        public ActionResult Get()
+        {
+            return Ok(userService.GetAllCustomers());
+        }
 
         // GET api/<ValuesController>/5
-       [HttpGet("{id}")]
-       public ActionResult<Customers> Get(int id)
+        [HttpGet("{id}")]
+       public ActionResult<Customers> Get(string id)
        {
+            //.ListCustomer.Find(x => x.Id==(id));
             // return "value";
-            var cust = _context.ListCustomer.Find(x => x.Id==(id));
+            var cust =userService.GetIdCustomers(id);
             if (cust == null)
             {
                 return NotFound();
@@ -50,10 +52,15 @@ namespace HighparkingProject.Controllers
         // POST api/<ValuesController>
         [HttpPost]
        
-        public void Post([FromBody] Customers c)
+        public ActionResult  Post([FromBody] Customers c)
         {
+            if (c.Id.ToString().Length != 9)
+            {
+                return BadRequest();
+            }
             customer.Add(new Customers {Id =c.Id, Name=c.Name,Phon=c.Phon,Mail=c.Mail,Code=c.Code,Credit=c.Credit, Bit =c.Bit, Kind = c.Kind, Point =c.Point });
             counter++;
+            return Ok();
 
         }
 
@@ -78,9 +85,9 @@ namespace HighparkingProject.Controllers
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
-            Customers c = customer.Find(eve => eve.Id==(id));
+            Customers c = customer.Find(eve => eve.Id.Equals(id));
             if(c != null) {
             customer.Remove(c);
             counter--;

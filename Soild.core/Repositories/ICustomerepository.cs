@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Soild.core.Repositories
 {
-    public interface IUserepository
+    public interface ICustomerepository
     {
-         List<Invoicing> GetAllInvoicings();
+        
         List<Customers> GetAllCustomers();
-        //TODO ID
-        Invoicing GetIdCustomers(int id);
-        Invoicing GetByIdInvoicings(int id);
+        Customers GetIdCustomers(string id);
+        int CountCustomers();
+
+
+
     }
 }
