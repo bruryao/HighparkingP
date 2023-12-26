@@ -17,16 +17,16 @@ namespace Soild.data.Repositories
         }
         public List<Customers> GetAllCustomers()
         {
-            return _context.ListCustomer;
+            return _context.ListCustomer.ToList();
 
         }
         public Customers GetIdCustomers(string id)
         {
-            return _context.ListCustomer.First(i => i.Id.Equals(id));
+            return _context.ListCustomer.ToList().First(i => i.Id.Equals(id));
         }
         public int CountCustomers()
         {
-            int count = _context.ListCustomer.Count;
+            int count = _context.ListCustomer.ToList().Count;
             return count;
         }
     }

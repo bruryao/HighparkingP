@@ -19,7 +19,7 @@ builder.Services.AddScoped<ICustomerepository, Customerrepositories>();
 builder.Services.AddScoped<ICustumerservice, CustomerService>();
 builder.Services.AddScoped<IInservice, InvokingService>();
 
-builder.Services.AddSingleton<DataContext>();
+builder.Services.AddDbContext<DataContext>();
 
 
 var app = builder.Build();

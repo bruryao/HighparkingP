@@ -21,17 +21,18 @@ namespace Soild.data.Repositories
      
 
         public List<Invoicing> GetAllInvoicings() {
-            return _context.ListInvoicing;
+            return _context.ListInvoicing.ToList();
             
         }
 
         public Invoicing GetIdInvoicings(string id)
         {
-            return _context.ListInvoicing.Find(i => i.Id.Equals(id));
+            return _context.ListInvoicing.ToList()
+           .Find(i => i.Id.Equals(id));
         }
          public int CountInvoicings()
             {
-                int count = _context.ListInvoicing.Count;
+                int count = _context.ListInvoicing.ToList().Count;
                 return count;
           }
        
